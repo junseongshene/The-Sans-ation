@@ -1,0 +1,309 @@
+/* ============ Fonts ============ */
+@font-face {
+  font-family: "YMG Munche";
+  src: url("../Fonts/YMGMuncheGothic-Medium.otf") format("opentype");
+  font-weight: 400 500;
+}
+@font-face {
+  font-family: "YMG Munche";
+  src: url("../Fonts/YMGMuncheGothic-Bold.otf") format("opentype");
+  font-weight: 700;
+}
+@font-face {
+  font-family: "Sinjung Gothic";
+  src: url("../Fonts/신중고딕_Medium.ttf") format("truetype");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "SF Pro Text Web";
+  src: url("../Fonts/SF-Pro-Text-Bold.otf") format("opentype");
+  font-weight: 700;
+}
+
+/*
+  비교 폰트 슬롯. 폰트 파일/웹폰트를 받으면 아래에 @font-face를 추가하고
+  해당 변수의 첫 번째 이름만 맞춰주면 된다. 현재는 시스템/Adobe 폰트로 임시 렌더링.
+  예) @font-face { font-family: "Univers"; src: url("../Fonts/Univers.woff2"); }
+*/
+:root {
+  /* 각주 원: 원형 윤곽 + 사각 점(대시) */
+  --ring-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='47' fill='none' stroke='%23d0021b' stroke-width='6' stroke-dasharray='6.152 6.152'/%3E%3C/svg%3E");
+  --tilt: -8.25deg; /* 헤더·범례·섹션 소제목 공통 기울기 */
+  --black: #000;
+  --pink: #e9a9ac;
+  --red: #d0021b;
+  --line: #b9b9b9;
+
+  /* 영문(제목·본문): Helvetica. 한글 글리프는 뒤의 문체고딕으로 넘어간다 (generic 폰트를 중간에 두지 않는다) */
+  --f-helvetica: "Helvetica Neue", Helvetica, "YMG Munche", sans-serif;
+  --f-ko: "YMG Munche", sans-serif;                 /* 국문 본문 */
+  --f-note: "Sinjung Gothic", "YMG Munche", sans-serif; /* 각주·서브텍스트 */
+
+  /* 기준(분홍) */
+  --f-ref: Helvetica, "Helvetica Neue", Arial, sans-serif;
+
+  /* 비교 9종 (Adobe Fonts 웹키트 + Fonts/ 폴더) */
+  --f-akzidenz: "akzidenz-grotesk-next-pro", sans-serif;
+  --f-haas: "neue-haas-grotesk-display", sans-serif;
+  --f-neue-helvetica: "Helvetica Neue", Helvetica, sans-serif; /* 시스템 폰트 */
+  --f-univers: "univers-next-pro", sans-serif;
+  --f-arial: "arial", sans-serif;
+  --f-nimbus: "nimbus-sans", sans-serif;
+  --f-roboto: "roboto", sans-serif;
+  --f-sf: "SF Pro Text Web", sans-serif;
+  --f-inter: "inter-28pt", sans-serif;
+}
+
+/* ============ Base ============ */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 50px; }
+body {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  margin: 0;
+  background: #fff;
+  color: var(--black);
+  font-family: var(--f-helvetica);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+.page { max-width: 1800px; margin: 0 auto; }
+
+/*
+  포스터(1414px 폭) 기준 비율: 1px = 0.0707vw
+  좌우 여백 5.3vw / 4.5vw, 라벨 열 16.8vw, 카드 열 21.4vw x3, 간격 4.67vw
+*/
+
+/* ============ Hero ============ */
+.hero {
+  position: relative;
+  height: 27.6vw;
+  margin-bottom: 5.4vw;
+  padding: 6vw 0 0;
+}
+.legend {
+  position: absolute;
+  left: 5.3vw;
+  top: 17.8vw;
+  z-index: 2;
+  font-size: 1.45vw;
+  font-weight: 700;
+  transform: rotate(var(--tilt));
+  transform-origin: left top;
+}
+.legend__item { display: flex; align-items: center; gap: 0.5em; margin: 0 0 0.75em; }
+.swatch { display: inline-block; width: 3.4em; height: 1.2em; }
+.swatch--pink { background: var(--pink); }
+.swatch--black { background: var(--black); }
+.swatch--circle { width: 2.9em; height: 2.9em; background: var(--ring-svg) center / 100% 100% no-repeat; }
+.legend__label--pink { color: var(--pink); }
+.legend__label--red { color: var(--red); font-family: var(--f-ko); }
+
+.title {
+  margin: 0 0 0 20.5vw;
+  position: relative;
+  font-family: var(--f-helvetica);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+  font-size: 10.6vw;
+}
+.title__top { display: block; transform: rotate(var(--tilt)); transform-origin: left bottom; }
+.title__box {
+  display: inline-block;
+  background: var(--black);
+  color: #fff;
+  padding: 0.08em 0.2em 0.1em 0.12em;
+  transform: rotate(var(--tilt));
+  transform-origin: left top;
+  margin-top: 0.1em;
+  white-space: nowrap;
+}
+.title__tail {
+  position: absolute; left: 52.5vw; top: 8.3vw;
+  transform: rotate(var(--tilt));
+  /* 검정 박스와 겹치는 부분은 흰색, 바깥은 검정으로 반전 (흰 글자 + difference) */
+  color: #fff;
+  mix-blend-mode: difference;
+}
+
+/* ============ Sub nav (스크롤 후 등장) ============ */
+.subnav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 10;
+  display: flex;
+  gap: 1.4em;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px 5.3vw;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--black);
+  font-size: 14px;
+  font-weight: 700;
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+}
+body.scrolled .subnav { transform: none; }
+.subnav a { color: inherit; text-decoration: none; }
+.subnav a:hover { color: var(--red); }
+
+/* ============ Group ============ */
+.group {
+  display: grid;
+  grid-template-columns: 16.83vw 1fr;
+  padding: 0 4.5vw 0 5.3vw;
+  margin-bottom: 5.4vw;
+  min-height: 31.4vw; /* 포스터 행 간격 고정 */
+}
+.page { max-width: none; }
+.group__label {
+  margin: 2.4vw 0 0;
+  font-weight: 700;
+  transform: rotate(var(--tilt));
+  transform-origin: left top;
+  align-self: start;
+}
+.group__en { display: block; font-size: 1.7vw; line-height: 1.12; letter-spacing: -0.03em; }
+.group__ko { display: block; font-family: var(--f-ko); font-size: 0.95vw; margin-top: 0.5em; letter-spacing: 0; }
+
+.group__cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4.67vw;
+}
+
+/* ============ Card (폭 기준 cqw 스케일) ============ */
+.card {
+  container-type: inline-size;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.card.is-visible { opacity: 1; transform: none; }
+body.static .card, body.static .ring::before { transition: none; }
+
+.sample {
+  position: relative;
+  height: 60cqw;
+  margin-bottom: 4cqw;
+  /* 두 글자 레이어를 같은 칸에 두고 베이스라인으로 정렬 → 폰트 메트릭이 달라도 같은 위치 */
+  display: grid;
+  align-content: start;
+}
+/* Helvetica(분홍)와 비교 폰트(검정)는 동일한 위치·크기로 겹친다 */
+.glyphs {
+  grid-area: 1 / 1;
+  align-self: baseline;
+  text-align: center;
+  padding-left: 0.045em; /* 음수 자간 보정 */
+  font-weight: 700;
+  font-size: 76cqw;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  white-space: nowrap;
+  transform: translateY(var(--gy, -8cqw));
+  pointer-events: none;
+}
+.glyphs--ref { color: var(--pink); font-family: var(--f-ref); transition: opacity 0.35s ease; }
+.glyphs--font { color: var(--black); font-family: var(--sample-font); }
+
+/* 호버: 분홍을 위로 올려 곱하기 블렌드 → 겹침/어긋남이 더 선명하게 */
+.sample:hover .glyphs--ref { z-index: 2; mix-blend-mode: multiply; }
+
+/* 각주 원 */
+.ring {
+  position: absolute;
+  left: calc(var(--cx) * 1cqw);
+  top: calc(var(--cy) * 1cqw);
+  width: calc(var(--cs) * 1cqw);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  color: var(--red);
+  font: 700 5.6cqw/1 var(--f-helvetica);
+  transition: transform 0.25s ease;
+  z-index: 3;
+}
+.ring::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--ring-svg) center / 100% 100% no-repeat;
+  clip-path: circle(0% at 50% 50%);
+  transition: clip-path 0.9s ease 0.4s;
+}
+.card.is-visible .ring::before { clip-path: circle(75% at 50% 50%); }
+.ring span { position: absolute; left: 100%; top: -6%; transform: translate(-50%, -50%); white-space: nowrap; }
+.ring:hover, .ring:focus-visible, .ring.is-active { transform: translate(-50%, -50%) scale(1.15); outline: none; }
+
+.card__name {
+  font-family: var(--sample-font);
+  margin: 0 0 3.6cqw;
+  font-size: 7.3cqw;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+}
+
+.meta { margin: 0; border-top: 0.7cqw solid var(--black); font-size: 4.85cqw; }
+.meta > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+  height: 9.6cqw;
+  align-items: center;
+  border-bottom: 0.3cqw solid #aaa;
+}
+.meta > div:last-child { border-bottom: 0; }
+.meta dt, .meta dd { margin: 0; font-weight: 700; font-family: var(--f-helvetica); }
+.meta dt { font-family: var(--f-ko); }
+.meta dd { text-align: right; }
+
+.desc {
+  margin: 0;
+  padding: 2.4cqw 0 2.6cqw;
+  border-top: 0.3cqw solid #aaa;
+  border-bottom: 0.3cqw solid #aaa;
+  font-family: var(--f-helvetica);
+  font-size: max(3.85cqw, 11px);
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+  font-weight: 500;
+}
+.meta + .desc { border-top: 0.7cqw solid var(--black); border-top-width: 0.3cqw; border-top-color: #aaa; }
+.note {
+  margin: 0;
+  padding-top: 2.2cqw;
+  font-family: var(--f-note);
+  font-size: max(3.1cqw, 10px);
+  line-height: 1.55;
+  color: #444;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+.note.is-active { color: var(--red); background: rgba(208, 2, 27, 0.07); }
+
+/* ============ Responsive ============ */
+@media (max-width: 1000px) {
+  .hero { height: 40vw; }
+  .group { grid-template-columns: 1fr; padding: 0 5vw; margin-bottom: 8vw; }
+  .group__label { margin: 0 0 4vw; transform: none; }
+  .group__en { font-size: 20px; }
+  .group__ko { font-size: 13px; }
+  .group__cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6vw; }
+}
+@media (max-width: 600px) {
+  .group__cards { grid-template-columns: 1fr; }
+  .title__tail { left: 48vw; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .card { opacity: 1; transform: none; transition: none; }
+  .ring::before { clip-path: none; transition: none; }
+}
